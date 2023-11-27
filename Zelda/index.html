@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="style.css" rel="stylesheet" type="text/css"><link>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    
+    <meta charset="utf-8" />
+    <title>ZeldaProject</title>
+    <style>
+    	* { padding: 0; margin: 0; }
+    </style>
+</head>
+<div class="Author col-sm-12">
+    <span class="name">KLK Layo</span>
+</div>
+<body style="background: url('./media/water.png')">
+<canvas id="myCanvas" width="1200" height="1000" style="background: url('./media/Grass.png')" ></canvas>
+<img id="step0" src=".//media/DefaultDown.png" width="75" height="75" class="hidden">
+<img id="step1" src="./media/RightStep1.png" width="75" height="75" class="hidden">
+<img id="step2" src="./media/RightStep2.png" width="75" height="75" class="hidden">
+<img id="step3" src="./media/DefaultRight.png" width="75" height="75" class="hidden">
+<img id="step4" src="./media/LeftStep1.png" width="75" height="75" class="hidden">
+<img id="step5" src="./media/LeftStep2.png" width="75" height="75" class="hidden">
+<img id="step6" src="./media/DefaultLeft.png" width="75" height="75" class="hidden">
+<img id="step7" src="./media/DownStep1.png" width="75" height="75" class="hidden">
+<img id="step8" src="./media/DownStep2.png" width="75" height="75" class="hidden">
+<img id="step9" src="./media/DefaultUp.png" width="75" height="75" class="hidden">
+<img id="step10" src="./media/UpStep1.png" width="75" height="75" class="hidden">
+<img id="step11" src="./media/DownStep2.png" width="75" height="75" class="hidden">
+<img id="rock" src="./media/Rock.png" width="90" height="90" class="hidden">
+<img id="florY" src=".//media/florAmarilla.png" width="75" height="75" class="hidden">
+<img id="florR" src=".//media/florRoja.png" width="75" height="75" class="hidden">
+<img id="florB" src=".//media/florAzul.png" width="75" height="75" class="hidden">
+<img id="sword" src=".//media/master.png" width="75" height="75" class="hidden">
+
+<script>
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext('2d');  
+
+    var currentStep = document.getElementById("step0");
+    var step1 = document.getElementById("step1");
+    var step2 = document.getElementById("step2");
+    var step3 = document.getElementById("step3");
+    var step4 = document.getElementById("step4");
+    var step5 = document.getElementById("step5");
+    var step6 = document.getElementById("step6");
+    var step7 = document.getElementById("step7");
+    var step8 = document.getElementById("step8");
+    var step9 = document.getElementById("step9");
+    var step10 = document.getElementById("step10");
+    var step11 = document.getElementById("step11");
+    var rock1 = document.getElementById("rock");
+    var flor1 = document.getElementById("florY");
+    var flor2 = document.getElementById("florR");
+    var flor3 = document.getElementById("florB");
+    var sword = document.getElementById("sword");
+
+    document.addEventListener("keydown", keyDownHandler, false);
+    document.addEventListener("keyup", keyUpHandler, false);
+    var arrowUp = document.getElementsByClassName("arrow_up");
+    var arrowDown = document.getElementsByClassName("arrow_down");
+    var arrowLeft = document.getElementsByClassName("arrow_left");
+    var arrowRight = document.getElementsByClassName("arrow_right");
+    
+    var rightPressed = false;
+    var leftPressed = false;
+    var upPressed = false;
+    var downPressed = false;
+    var step = 6;
+    
+
+    function keyDownHandler(e) {
+        if(e.keyCode === 39){
+            rightPressed = true;
+        }else if(e.keyCode === 37){
+            leftPressed = true;
+        } else if (e.keyCode === 40){
+            downPressed = true;
+        } else if (e.keyCode === 38){
+            upPressed = true;
+        }
+    }
+        
+
+    function keyUpHandler(e) {
+        if(e.keyCode === 39) {
+            rightPressed = false;
+        } else if(e.keyCode === 37) {
+            leftPressed = false;
+        } else if (e.keyCode === 40){
+            downPressed = false;
+        } else if (e.keyCode === 38){
+            upPressed = false;
+        }
+    }
+
+    function Left(){
+        upPressed = false;
+        downPressed = false;
+        rightPressed = false;
+        leftPressed = !leftPressed;
+        setTimeout(()=>{
+            leftPressed = false;
+        }, 300)
+    }
+
+
+    function Right(){
+        leftPressed = false;
+        upPressed = false;
+        downPressed = false;
+        rightPressed = !rightPressed;
+        setTimeout(()=>{
+            rightPressed = false;
+        }, 300)
+    }
+
+    function Up(){
+        leftPressed = false;
+        downPressed = false;
+        rightPressed = false;
+        upPressed = !upPressed;
+        setTimeout(()=>{
+            upPressed = false;
+        }, 300)
+    }
+
+    function Down(){
+        leftPressed = false;
+        upPressed = false;
+        rightPressed = false;
+        downPressed = !downPressed;
+        setTimeout(()=>{
+            downPressed = false;
+        }, 300)
+    }
+
+    
+    var x = canvas.width/2;
+    var y = canvas.height/2 - 400;
+
+    function drawLink(){
+        ctx.drawImage(currentStep, x, y);
+    }
+
+    function drawRock1(){
+        ctx.drawImage(rock1, 300, 300);
+        ctx.drawImage(sword, 475,192);
+        ctx.drawImage(flor1, 600,600);
+        ctx.drawImage(flor2, 215, 900);
+        ctx.drawImage(flor3, 25, 500);
+    }
+
+
+
+    function walk(){
+
+        if(rightPressed){
+            
+            if (currentStep !== step3){
+            currentStep = step3;
+            } else if (currentStep === step3){
+            currentStep = step2;
+
+            } else if (currentStep === step2){
+            currentStep = step1;
+            } else if(currentStep === step1){
+                currentStep = step3;
+            }
+
+        } else if(leftPressed){
+            
+            if (currentStep !== step6){
+            currentStep = step6;
+            } else if (currentStep === step6){
+            currentStep = step5;
+
+            } else if (currentStep === step5){
+            currentStep = step4;
+            } else if(currentStep === step4){
+                currentStep = step6;
+            }
+
+        } else if(downPressed){
+            
+            if (currentStep !== step0){
+            currentStep = step0;
+            } else if (currentStep === step0){
+            currentStep = step7;
+
+            } else if (currentStep === step7){
+            currentStep = step8;
+            } else if(currentStep === step8){
+                currentStep = step0;
+            }
+
+        } else if(upPressed){
+            
+            if (currentStep !== step9){
+            currentStep = step9;
+            } else if (currentStep === step9){
+            currentStep = step10;
+            } else if (currentStep === step10){
+            currentStep = step11;
+            } else if(currentStep === step11){
+                currentStep = step9;
+            }
+
+        }
+    
+    }
+   
+    function draw(){
+        ctx.clearRect(0, 0, canvas.width, canvas.height); 
+        drawLink();
+        drawRock1();
+        
+        if(rightPressed) {
+            if(x+75 >= 1200){
+                x = 1120;
+            } else if(x+75>=300 && x<715 && y>=202 && y<=550) {
+                x = 265;
+
+            } else {
+                x += step;  
+                walk();
+            }
+
+        } else if(leftPressed) {
+            if(x-75 <= 0){
+                x = 06;
+            } else if(x-75<=733 && x>265 && y>=202 && y<=550) {
+                x = 715;
+            } else {
+                x -= step;
+                walk();
+            }
+            
+        } else if(downPressed){
+            if(y+75 >= 1000){
+                y = 920;
+            } else if(y+75>=185 && y<563 && x>=264 && x<=710) {
+                y = 178;
+            } else {
+                y += step;
+                walk();
+            }
+        
+        } else if(upPressed){
+            if(y-75 <= 0){
+                y = 5;
+            } else if(y-75<=560 && y>182 && x>=264 && x<=710) {
+                y = 567;
+            } else {
+                y -= step;
+                walk();
+            }
+        }
+    }
+
+    function showPosition(){
+        console.log(x);
+        console.log(y);
+    }
+
+    setInterval(draw, 10);
+    setInterval(showPosition,10);
+
+</script>
+
+<div class="botones">
+    <div id="arribaSola">
+        <button onclick="Up()"><img id="flechaArriba" src="./media/FlechaArriba.png"></button>
+    </div>
+    <button onclick="Left()"><img id="FlechaIzquierda" src="./media/FlechaIzquierda.png"></button>
+    <button onclick= "Down()"><img id="flechaAbajo" src="./media/FlechaAbajo.png"></button>
+    <button onclick="Right()"><img id="flechaDerecha" src="./media/FlechaDerecha.png"></button>
+    
+</div>
+</body>
+
+</html>

@@ -1,0 +1,39 @@
+#myCanvas{
+    border: solid rgb(241, 170, 108);
+    border-width: 25px;
+    
+}
+
+.hidden{
+    display: none;
+}
+
+body{
+    margin: 300px;
+}
+
+.name{
+    margin: 10px;
+    font-size: medium;
+    color: white;
+}
+
+.Author {
+    background-color: black;
+    width: 200px;
+    border: solid aqua;
+    border-width: 3pxpx;
+}
+.botones{
+    width: 550px;
+    height: 500px;
+    border-radius: 15%;
+}
+
+#arribaSola{
+    margin-left: 183px;
+    margin-bottom: 5px;
+}
+
+
+
